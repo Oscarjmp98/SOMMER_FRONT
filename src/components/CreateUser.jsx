@@ -19,7 +19,7 @@ function CreateUser() {
         setSuccessMessage('');
 
         try {
-            const response = await axios.post('http://localhost:5000/v1/drivers/Usuarios', {
+            const response = await axios.post('http://localhost:5000/api/chat/Usuarios', {
                 correo,
                 contrasena,
                 nombre,
@@ -39,7 +39,7 @@ function CreateUser() {
 
     return (
         <div className='allcreateUser'>
-            <div className="container">
+            <div>
                 <form onSubmit={handleCreateUser}>
                     <div className='Bloque de registro'>
                         <h1 id="tituloCrearUsuario">Crear Usuario</h1>

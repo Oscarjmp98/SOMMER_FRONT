@@ -39,7 +39,7 @@ function CreateAdmin() {
 
     return (
         <div className='allcreateAdmin'>
-            <div className="container">
+            <div>
                 <form onSubmit={handleCreateUser}>
                     <div className='Bloque de registro'>
                         <h1 id="tituloCrearUsuario">Crear Usuario Administrador</h1>

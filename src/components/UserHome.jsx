@@ -3,19 +3,10 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "./styles/UserHome.css"
 
-const fetchCodes = async () => {
-  try {
-    const response = await axios.get("http://localhost:5000/v1/drivers/Venta")
-    return response.data
-  } catch (error) {
-    console.error("Error al obtener los códigos:", error)
-    return []
-  }
-}
-
 const fetchChatHistory = async (userId) => {
   try {
-    const response = await axios.get(`http://localhost:5000/v1/chat/history/${userId}`)
+    //const response = await axios.get(`http://localhost:5000/v1/chat/history/${userId}`)
+    const response = await axios.get(`http://localhost:5000/api/chat/history/${userId}`)
     return response.data.map((msg) => ({
       ...msg,
       timestamp: new Date(msg.timestamp),
@@ -26,10 +17,11 @@ const fetchChatHistory = async (userId) => {
   }
 }
 
-const sendMessageToBackend = async (message, userId) => {
+const sendMessageToBackend = async (prompt, userId) => {
   try {
-    const response = await axios.post("http://localhost:5000/v1/chat/message", {
-      message,
+    //const response = await axios.post("http://localhost:5000/v1/chat/message", {
+    const response = await axios.post("http://localhost:5000/api/chat", {
+      prompt,
       userId,
     })
     return response.data.response
@@ -151,7 +143,7 @@ function UserHome() {
               <h2>Chat Asistente</h2>
               <div className="chat-box">
                 {messages.length === 0 ? (
-                  <p>No hay mensajes aún. ¡Inicia una conversación!</p>
+                  <p>¡Como te trata la vida, Ve? ¡Habla Puej!</p>
                 ) : (
                   <div className="messages">
                     {messages.map((message) => (
@@ -189,33 +181,6 @@ function UserHome() {
               </div>
             </section>
 
-            <section className="code-list">
-              <h2>Historial de Compras</h2>
-              {codes.length === 0 ? (
-                <p>Cargando historial de compras...</p>
-              ) : (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Producto</th>
-                      <th>Valor</th>
-                      <th>Fecha</th>
-                      <th>Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {codes.map((code, index) => (
-                      <tr key={index}>
-                        <td>{code.producto}</td>
-                        <td>{code.valor}</td>
-                        <td>{new Date(code.fechaV).toLocaleDateString()}</td>
-                        <td>{code.Estado}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </section>
           </main>
         </header>
 
@@ -225,7 +190,7 @@ function UserHome() {
         </nav>
 
         <footer className="footer">
-          <p>&copy; 2025 MarketPlace. Todos los derechos reservados.</p>
+          <p>&copy; 🥟 2025  SOMMER 🤖 IA ❤ . Todos los derechos reservados Oiste, ve!!...</p>
         </footer>
       </div>
     </div>
