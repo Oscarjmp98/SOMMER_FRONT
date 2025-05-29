@@ -1,0 +1,87 @@
+/* Form.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-color: #f9f9f9; /* Fondo fresco y claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+form {
+    background-color: #ffffff; /* Fondo blanco para el formulario */
+    border-radius: 12px; /* Bordes suaves y modernos */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    padding: 30px; /* Espacio interno */
+    max-width: 400px;
+    width: 90%; /* Se adapta a dispositivos pequeños */
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333333; /* Texto oscuro y neutral */
+    margin-bottom: 20px;
+}
+
+h4 {
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.entry {
+    display: block;
+    width: 100%;
+    padding: 12px; /* Campos más espaciosos */
+    margin-bottom: 20px;
+    border: 1px solid #ddd; /* Bordes discretos */
+    border-radius: 6px; /* Bordes suaves */
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #333333;
+    transition: border-color 0.3s ease; /* Transición suave al enfocarse */
+}
+
+.entry:focus {
+    border-color: #0078d4; /* Color azul moderno */
+    outline: none;
+}
+
+button {
+    display: block;
+    width: 100%; /* Botones grandes y amigables */
+    padding: 12px;
+    background-color: #0078d4; /* Azul fresco y moderno */
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Cambio suave al pasar el cursor */
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #005a9e; /* Azul más oscuro al pasar */
+}
+
+p {
+    color: red; /* Color que destaca para errores */
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    form {
+        width: 95%; /* Más adaptable a pantallas pequeñas */
+    }
+
+    h1 {
+        font-size: 20px; /* Texto más pequeño en móviles */
+    }
+}

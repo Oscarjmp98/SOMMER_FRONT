@@ -1,0 +1,120 @@
+/* AdminHome.css */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  background-color: #f5f5f5; /* Fondo claro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.allAdminHome {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-home {
+  background-color: #ffffff; /* Fondo blanco */
+  border-radius: 12px; /* Bordes suaves */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  padding: 30px;
+  width: 90%;
+  max-width: 900px; /* Límite máximo para pantallas grandes */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  height: 50px; /* Ajuste del tamaño del logo */
+}
+
+nav {
+  display: flex;
+  gap: 10px; /* Espacio entre botones */
+}
+
+nav button {
+  padding: 10px 20px;
+  background-color: #0078d4; /* Azul vibrante */
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+nav button:hover {
+  background-color: #005a9e; /* Azul más oscuro */
+}
+
+#welcomeAdmin {
+  font-size: 20px;
+  color: #333333; /* Texto neutro */
+  margin-bottom: 20px;
+}
+
+.admin-info,
+.lista-codigo {
+  margin-bottom: 30px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #0078d4; /* Fondo azul para la cabecera */
+  color: #ffffff; /* Texto blanco */
+}
+
+thead th {
+  padding: 10px;
+  font-size: 14px;
+  text-align: left;
+}
+
+tbody td {
+  padding: 10px;
+  border: 1px solid #ddd; /* Bordes discretos */
+  font-size: 14px;
+  color: #333333;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Fondo alternado para filas */
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* Efecto al pasar el cursor */
+}
+
+h2 {
+  font-size: 18px;
+  color: #0078d4; /* Azul vibrante */
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .admin-home {
+      width: 95%;
+  }
+
+  h2 {
+      font-size: 16px; /* Ajustes para pantallas pequeñas */
+  }
+
+  nav button {
+      font-size: 12px; /* Botones más pequeños */
+      padding: 8px 15px;
+  }
+}

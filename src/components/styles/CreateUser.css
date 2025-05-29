@@ -1,0 +1,101 @@
+/* CreateUser.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-color: #f9f9f9; /* Fondo fresco y claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.allcreateUser {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    background-color: #ffffff; /* Fondo blanco del formulario */
+    border-radius: 12px; /* Bordes suaves */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    padding: 30px;
+    width: 90%;
+    max-width: 400px; /* Tamaño máximo */
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* Estructura vertical */
+    width: 100%;
+}
+
+h1 {
+    font-size: 24px;
+    color: #161616; /* Texto oscuro neutro */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+input:focus {
+    border-color: #0078d4; /* Azul moderno */
+    outline: none;
+}
+
+label {
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 12px;
+    background-color: #0078d4; /* Azul fresco y moderno */
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Efecto de transición */
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #005a9e; /* Azul más oscuro */
+}
+
+.success {
+    color: green; /* Mensaje de éxito */
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.error {
+    color: red; /* Mensaje de error */
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #555555;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    h1 {
+        font-size: 20px; /* Ajuste para dispositivos pequeños */
+    }
+}
+
+
+
