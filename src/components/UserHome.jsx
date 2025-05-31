@@ -14,36 +14,70 @@ const formatTimestamp = (timestamp) => {
 
 const fetchChatHistory = async (userId) => {
   try {
-    const response = await axios.get(`https://sommer-back-steel.vercel.app/api/chat/history/${userId}`)
-    //const response = await axios.get(`http://localhost:5000/api/chat/history/${userId}`)
-    const chatHistory = []
+    const response = await axios.get(`https://sommer-back-steel.vercel.app/api/chat/history/${userId}`);
+    // const response = await axios.get(`http://localhost:5000/api/chat/history/${userId}`);
     
-    response.data.forEach((conv, index) => {
-      const baseTime = new Date()
+    const chatHistory = response.data.flatMap((conv, index) => {
+      const baseTime = new Date();
       
-      chatHistory.push({
-        id: `user_${index}_${Date.now()}`,
-        role: "user",
-        content: conv.prompt,
-        timestamp: baseTime,
-        displayTime: formatTimestamp(baseTime)
-      })
-      
-      chatHistory.push({
-        id: `assistant_${index}_${Date.now()}`,
-        role: "assistant", 
-        content: conv.resumen,
-        timestamp: new Date(baseTime.getTime() + 1000),
-        displayTime: formatTimestamp(new Date(baseTime.getTime() + 1000))
-      })
-    })
-    
-    return chatHistory
+      return [
+        {
+          id: `user_${index}_${Date.now()}`,
+          role: "user",
+          content: conv.prompt,
+          timestamp: baseTime,
+          displayTime: formatTimestamp(baseTime)
+        },
+        {
+          id: `assistant_${index}_${Date.now()}`,
+          role: "assistant", 
+          content: conv.resumen,
+          timestamp: new Date(baseTime.getTime() + 1000),
+          displayTime: formatTimestamp(new Date(baseTime.getTime() + 1000))
+        }
+      ];
+    });
+
+    return chatHistory.reverse(); // Invierte el orden para que los más recientes estén abajo
   } catch (error) {
-    console.error("Error al obtener historial:", error)
-    return []
+    console.error("Error al obtener historial:", error);
+    return [];
   }
-}
+};
+
+
+// const fetchChatHistory = async (userId) => {
+//   try {
+//     const response = await axios.get(`https://sommer-back-steel.vercel.app/api/chat/history/${userId}`)
+//     //const response = await axios.get(`http://localhost:5000/api/chat/history/${userId}`)
+//     const chatHistory = []
+    
+//     response.data.forEach((conv, index) => {
+//       const baseTime = new Date()
+      
+//       chatHistory.push({
+//         id: `user_${index}_${Date.now()}`,
+//         role: "user",
+//         content: conv.prompt,
+//         timestamp: baseTime,
+//         displayTime: formatTimestamp(baseTime)
+//       })
+      
+//       chatHistory.push({
+//         id: `assistant_${index}_${Date.now()}`,
+//         role: "assistant", 
+//         content: conv.resumen,
+//         timestamp: new Date(baseTime.getTime() + 1000),
+//         displayTime: formatTimestamp(new Date(baseTime.getTime() + 1000))
+//       })
+//     })
+    
+//     return chatHistory
+//   } catch (error) {
+//     console.error("Error al obtener historial:", error)
+//     return []
+//   }
+// }
 
 const sendMessageToBackend = async (prompt, userId) => {
   try {
