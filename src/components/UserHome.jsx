@@ -1,109 +1,139 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import "./styles/UserHome.css"
 
+const formatTimestamp = (timestamp) => {
+  try {
+    const date = timestamp instanceof Date ? timestamp : new Date(timestamp)
+    return isNaN(date.getTime()) ? new Date().toLocaleTimeString() : date.toLocaleTimeString('es-ES')
+  } catch {
+    return new Date().toLocaleTimeString()
+  }
+}
+
 const fetchChatHistory = async (userId) => {
   try {
-    //const response = await axios.get(`http://localhost:5000/v1/chat/history/${userId}`)
     const response = await axios.get(`http://localhost:5000/api/chat/history/${userId}`)
-    return response.data.map((msg) => ({
-      ...msg,
-      timestamp: new Date(msg.timestamp),
-    }))
+    const chatHistory = []
+    
+    response.data.forEach((conv, index) => {
+      const baseTime = new Date()
+      
+      chatHistory.push({
+        id: `user_${index}_${Date.now()}`,
+        role: "user",
+        content: conv.prompt,
+        timestamp: baseTime,
+        displayTime: formatTimestamp(baseTime)
+      })
+      
+      chatHistory.push({
+        id: `assistant_${index}_${Date.now()}`,
+        role: "assistant", 
+        content: conv.resumen,
+        timestamp: new Date(baseTime.getTime() + 1000),
+        displayTime: formatTimestamp(new Date(baseTime.getTime() + 1000))
+      })
+    })
+    
+    return chatHistory
   } catch (error) {
-    console.error("Error al obtener el historial de chat:", error)
+    console.error("Error al obtener historial:", error)
     return []
   }
 }
 
 const sendMessageToBackend = async (prompt, userId) => {
   try {
-    //const response = await axios.post("http://localhost:5000/v1/chat/message", {
-    const response = await axios.post("http://localhost:5000/api/chat", {
-      prompt,
-      userId,
-    })
+    const response = await axios.post("http://localhost:5000/api/chat", { prompt, userId })
     return response.data.response
   } catch (error) {
-    console.error("Error al enviar mensaje:", error)
     throw new Error("Error al procesar el mensaje")
   }
 }
 
 function UserHome() {
-  const [user, setUser] = useState({
-    id: "",
-    nombre: "",
-    correo: "",
-    numeroCelular: "",
-    ciudad: "",
-  })
-
-  const [codes, setCodes] = useState([])
+  const [user, setUser] = useState({ id: "", nombre: "", correo: "" })
   const [messages, setMessages] = useState([])
   const [inputMessage, setInputMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [historyLoaded, setHistoryLoaded] = useState(false)
+  const messagesEndRef = useRef(null)
   const navigate = useNavigate()
 
+  const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+
+  useEffect(() => scrollToBottom(), [messages])
+
   useEffect(() => {
-    const usuarioGuardado = localStorage.getItem("usuario")
-    if (usuarioGuardado) {
+    const loadUserAndHistory = async () => {
+      const usuarioGuardado = localStorage.getItem("usuario")
+      if (!usuarioGuardado) {
+        navigate("/")
+        return
+      }
+
       const userData = JSON.parse(usuarioGuardado)
       setUser(userData)
-      loadChatHistory(userData.id || userData.correo)
+      
+      const userId = userData.id || userData.correo
+      if (userId) await loadChatHistory(userId)
     }
-
-    const loadCodes = async () => {
-      const codesData = await fetchCodes()
-      setCodes(codesData)
-    }
-
-    loadCodes()
-  }, [])
+    loadUserAndHistory()
+  }, [navigate])
 
   const loadChatHistory = async (userId) => {
-    try {
-      const history = await fetchChatHistory(userId)
-      setMessages(history)
-    } catch (error) {
-      console.error("Error cargando historial:", error)
-    }
+    setHistoryLoaded(false)
+    const history = await fetchChatHistory(userId)
+    setMessages(history)
+    setHistoryLoaded(true)
   }
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return
 
+    const userId = user.id || user.correo
+    if (!userId) return
+
+    const timestamp = Date.now()
+    const currentTime = new Date()
+
     const userMessage = {
-      id: Date.now().toString(),
+      id: `user_${timestamp}`,
       role: "user",
-      content: inputMessage,
-      timestamp: new Date(),
+      content: inputMessage.trim(),
+      timestamp: currentTime,
+      displayTime: formatTimestamp(currentTime)
     }
 
-    setMessages((prev) => [...prev, userMessage])
+    setMessages(prev => [...prev, userMessage])
+    const currentMessage = inputMessage.trim()
     setInputMessage("")
     setIsLoading(true)
 
     try {
-      const response = await sendMessageToBackend(inputMessage, user.id || user.correo)
+      const response = await sendMessageToBackend(currentMessage, userId)
+      const responseTime = new Date()
 
       const assistantMessage = {
-        id: (Date.now() + 1).toString(),
+        id: `assistant_${timestamp}`,
         role: "assistant",
         content: response,
-        timestamp: new Date(),
+        timestamp: responseTime,
+        displayTime: formatTimestamp(responseTime)
       }
 
-      setMessages((prev) => [...prev, assistantMessage])
+      setMessages(prev => [...prev, assistantMessage])
     } catch (error) {
       const errorMessage = {
-        id: (Date.now() + 1).toString(),
+        id: `error_${timestamp}`,
         role: "assistant",
-        content: "Lo siento, hubo un error al procesar tu mensaje.",
+        content: "Error al procesar tu mensaje. Intenta de nuevo.",
         timestamp: new Date(),
+        displayTime: formatTimestamp(new Date())
       }
-      setMessages((prev) => [...prev, errorMessage])
+      setMessages(prev => [...prev, errorMessage])
     } finally {
       setIsLoading(false)
     }
@@ -127,41 +157,38 @@ function UserHome() {
               <h2>Información del Usuario</h2>
               <table>
                 <tbody>
-                  <tr>
-                    <td>Nombre:</td>
-                    <td>{user.nombre}</td>
-                  </tr>
-                  <tr>
-                    <td>Correo:</td>
-                    <td>{user.correo}</td>
-                  </tr>
+                  <tr><td>Nombre:</td><td>{user.nombre}</td></tr>
+                  <tr><td>Correo:</td><td>{user.correo}</td></tr>
+                  <tr><td>ID de Usuario:</td><td>{user.id || user.correo}</td></tr>
                 </tbody>
               </table>
             </section>
 
             <section className="chat-section">
-              <h2>Chat Asistente</h2>
+              <div className="chat-header">
+                <h2>Chat Asistente</h2>
+              </div>
+              
               <div className="chat-box">
-                {messages.length === 0 ? (
-                  <p>¡Como te trata la vida, Ve? ¡Habla Puej!</p>
+                {!historyLoaded ? (
+                  <div className="loading-history"><p>Cargando historial...</p></div>
+                ) : messages.length === 0 ? (
+                  <div className="empty-chat">
+                    <p>¡Como te trata la vida, Ve? ¡Habla Puej!</p>
+                    <small>Usuario ID: {user.id || user.correo}</small>
+                  </div>
                 ) : (
                   <div className="messages">
                     {messages.map((message) => (
-                      <div
-                        key={message.id}
-                        className={`message ${message.role === "user" ? "user-message" : "assistant-message"}`}
-                      >
+                      <div key={message.id} className={`message ${message.role === "user" ? "user-message" : "assistant-message"}`}>
                         <p>{message.content}</p>
-                        <span className="timestamp">
-                          {message.timestamp.toLocaleTimeString()}
-                        </span>
+                        <span className="timestamp">{message.displayTime || formatTimestamp(message.timestamp)}</span>
                       </div>
                     ))}
                     {isLoading && (
-                      <div className="message assistant-message">
-                        <p>Escribiendo...</p>
-                      </div>
+                      <div className="message assistant-message loading"><p>Escribiendo...</p></div>
                     )}
+                    <div ref={messagesEndRef} />
                   </div>
                 )}
 
@@ -173,14 +200,14 @@ function UserHome() {
                     onKeyPress={handleKeyPress}
                     placeholder="Escribe tu mensaje aquí..."
                     disabled={isLoading}
+                    maxLength={500}
                   />
                   <button onClick={handleSendMessage} disabled={!inputMessage.trim() || isLoading}>
-                    Enviar
+                    {isLoading ? "..." : "Enviar"}
                   </button>
                 </div>
               </div>
             </section>
-
           </main>
         </header>
 
@@ -190,7 +217,7 @@ function UserHome() {
         </nav>
 
         <footer className="footer">
-          <p>&copy; 🥟 2025  SOMMER 🤖 IA ❤ . Todos los derechos reservados Oiste, ve!!...</p>
+          <p>&copy; 🥟 2025 SOMMER 🤖 IA ❤ . Todos los derechos reservados Oiste, ve!!...</p>
         </footer>
       </div>
     </div>
