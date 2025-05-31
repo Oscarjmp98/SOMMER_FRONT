@@ -14,8 +14,8 @@ form {
     border-radius: 12px; /* Bordes suaves y modernos */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
     padding: 30px; /* Espacio interno */
-    max-width: 400px;
-    width: 90%; /* Se adapta a dispositivos pequeños */
+    max-width: 200px;
+    width: 75%; /* Se adapta a dispositivos pequeños */
     text-align: center;
 }
 
@@ -46,7 +46,7 @@ h4 {
 }
 
 .entry:focus {
-    border-color: #0078d4; /* Color azul moderno */
+    border-color: #1f3148; /* Color azul moderno */
     outline: none;
 }
 
@@ -54,7 +54,7 @@ button {
     display: block;
     width: 100%; /* Botones grandes y amigables */
     padding: 12px;
-    background-color: #0078d4; /* Azul fresco y moderno */
+    background-color: #1f3148; 
     color: #ffffff;
     border: none;
     border-radius: 6px;
@@ -70,15 +70,15 @@ button:hover {
 }
 
 p {
-    color: red; /* Color que destaca para errores */
+    color: rgb(26, 24, 24); /* Color que destaca para errores */
     font-size: 12px;
     margin-top: -10px;
     margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 80%) {
     form {
-        width: 95%; /* Más adaptable a pantallas pequeñas */
+        width: 75%; /* Más adaptable a pantallas pequeñas */
     }
 
     h1 {

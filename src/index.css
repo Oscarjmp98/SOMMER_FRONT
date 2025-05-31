@@ -1,168 +1,180 @@
+/* 🌟 Variables globales */
 :root {
+  margin: auto;
   font-family: 'Arial', sans-serif;
-  line-height: 1.6;
+  line-height: 1.8;
   font-weight: 400;
-
-  color: #333; /* Texto neutro */
-  background-color: #f5f5f5; /* Fondo claro y limpio */
+  color: #fff;
+  background: linear-gradient(135deg, #141e30, #243b55); /* Fondo moderno */
 }
 
+/* 🎭 Estilo general del cuerpo */
 body {
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color:#ebebeb;
 }
 
-h1 {
-  font-size: 2.5em;
-  /*color: var(--color);*/
-  margin-bottom: 20px;
-}
-
-button {
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  padding: 10px 15px;
-  font-size: 1em;
-  background-color: #fff;
-  color: #333;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-button:hover {
-  background-color: #ebebeb; /* Suave cambio de color */
-  border-color: #ccc;
-}
-
-a {
-  color: #eaeef2; /* Azul limpio */
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(243, 240, 240, 0.1);
-  max-width: 400px;
-  width: 90%;
-  margin: auto;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f5f5f5;
-    background-color: #333;
-  }
-  body {
-    background-color: #242424;
-  }
-  form {
-    background-color: #444;
-    color: #f5f5f5;
-  }
- 
-
-  button {
-    background-color: #333;
-    color: #f5f5f5;
-  }
-  button:hover {
-    background-color: #444;
-    border-color: #888;
-  }
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-th {
-  background-color: black;
-  color: white;
-  font-weight: bold;
-  padding: 10px;
-  text-align: left;
-}
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
+/* 📦 Contenedor principal */
+.assistant-layout {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  width: 95%;
+  max-width: 1300px;
+  background: rgba(255, 255, 255, 0.15); /* Transparencia tipo vidrio */
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+  padding: 20px;
+  height: auto; /* Ajusta la altura según el contenido */
+  min-height: 60vh; /* No será demasiado pequeño */
+  max-height: 80vh; /* Evita que crezca demasiado */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+
+/* 🖥️ Cabecera superior con usuario */
+.assistant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: linear-gradient(to right, #ff512f, #dd2476);
+  color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-button {
+/* 📌 Ajuste del botón de cerrar sesión */
+.logout-button {
+  width: 130px;
+  padding: 3px 6px; /* Menos espacio interno */
+  font-size: 0.7rem; /* Texto más pequeño */
+  border-radius: 4px; /* Bordes menos redondeados */
+  border: 1px solid #ffffff; /* Borde más delgado */
+  color: #ffffff;
+  background: none;
+  margin-left: 5px; /* Ajuste de separación */
+}
+
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 💬 Contenedor del chat */
+.chat-container {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🏷️ Cabecera del chat */
+.chat-header {
+  text-align: center;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.chat-header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff512f;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* 📦 Área de mensajes */
+.chat-box {
+  flex-grow: 1; /* Permite que crezca dentro del espacio disponible */
+  max-height: 400px; /* Define una altura máxima para evitar la expansión descontrolada */
+  overflow-y: auto; /* Activa el desplazamiento vertical */
+  display: flex;
+  flex-direction: column-reverse; /* Mantiene los mensajes más recientes visibles */
+}
+
+
+.messages {
+  flex-grow: 1; /* Se ajusta dentro del `chat-box` */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.message {
+  padding: 14px;
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  margin: 10px 0;
+  max-width: 80%;
+  font-size: 1rem;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
+/* 📩 Mensaje usuario */
+.user-message {
+  background: linear-gradient(to right, #0077ff, #00c6ff);
+  color: #fff;
+  align-self: flex-end;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 🤖 Mensaje asistente */
+.assistant-message {
+  background: rgba(255, 255, 255, 0.3);
+  align-self: flex-start;
+  color: #222;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* ✏️ Área de entrada corregida */
+.input-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* 📏 Input con límites */
+.input-area input {
+  flex: 1;
+  max-width: 75%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  color: #fff;
+}
+
+/* 🚀 Botón de enviar dentro de su zona */
+.input-area button {
+  background: linear-gradient(to right, #ff512f, #dd2476);
+    color: #f8f6f6;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 102px;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.input-area button:hover {
+  background: linear-gradient(to right, #ff7730, #ff3377);
+}
+
+/* 📢 Pie de página */
+.assistant-footer {
+  text-align: center;
+  padding: 15px;
+  background: linear-gradient(to right, #141e30, #243b55);
+  color: #ffffff;
+  font-size: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}

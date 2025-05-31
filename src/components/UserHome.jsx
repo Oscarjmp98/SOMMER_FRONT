@@ -165,81 +165,81 @@ function UserHome() {
   }
 };
 
+return (
+  <div className="assistant-layout">
+    {/* Contenedor principal con disposición vertical */}
+    <div className="assistant-container">
+      
+      {/* Barra superior con información del usuario y logout */}
+      <header className="assistant-header">
+        <div className="user-info">
+          <h2>{user.nombre}</h2>
+          <p>{user.correo}</p>
+        </div>
+        <button className="logout-button" onClick={handleLogout}>Cerrar Sesión</button>
+      </header>
 
-  return (
-    <div className="allUserHome">
-      <div className="user-home">
-        <header className="header">
-          <main className="main-content">
-            <h1 className="welcome">¡Bienvenido {user.nombre}!</h1>
+      {/* Contenedor del chat */}
+      <main className="chat-container">
+        <section className="chat-header">
+          <h2>Asistente Virtual</h2>
+        </section>
 
-            <section className="user-info">
-              <h2>Información del Usuario</h2>
-              <table>
-                <tbody>
-                  <tr><td>Nombre:</td><td>{user.nombre}</td></tr>
-                  <tr><td>Correo:</td><td>{user.correo}</td></tr>                  
-                </tbody>
-              </table>
-            </section>
-
-            <section className="chat-section">
-              <div className="chat-header">
-                <h2>Chat Asistente</h2>
+        {/* Contenedor flexible del chat-box */}
+        <div className="chat-wrapper">
+          <div className="chat-box">
+            {!historyLoaded ? (
+              <div className="loading-history">
+                <p>Cargando historial...</p>
               </div>
-              
-              <div className="chat-box">
-                {!historyLoaded ? (
-                  <div className="loading-history"><p>Cargando historial...</p></div>
-                ) : messages.length === 0 ? (
-                  <div className="empty-chat">
-                    <p>¡Como te trata la vida, Ve? ¡Habla Puej!</p>                    
+            ) : messages.length === 0 ? (
+              <div className="empty-chat">
+                <p>Hola, ¿en qué puedo ayudarte hoy?</p>
+              </div>
+            ) : (
+              <div className="messages">
+                {messages.map((message) => (
+                  <div key={message.id} className={`message ${message.role === "user" ? "user-message" : "assistant-message"}`}>
+                    <p>{message.content}</p>
+                    <span className="timestamp">{message.displayTime || formatTimestamp(message.timestamp)}</span>
                   </div>
-                ) : (
-                  <div className="messages">
-                    {messages.map((message) => (
-                      <div key={message.id} className={`message ${message.role === "user" ? "user-message" : "assistant-message"}`}>
-                        <p>{message.content}</p>
-                        <span className="timestamp">{message.displayTime || formatTimestamp(message.timestamp)}</span>
-                      </div>
-                    ))}
-                    {isLoading && (
-                      <div className="message assistant-message loading"><p>Escribiendo...</p></div>
-                    )}
-                    <div ref={messagesEndRef} />
+                ))}
+                {isLoading && (
+                  <div className="message assistant-message loading">
+                    <p>Escribiendo...</p>
                   </div>
                 )}
-
-                <div className="input-area">
-                  <input
-                    type="text"
-                    value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Escribe tu mensaje aquí..."
-                    disabled={isLoading}
-                    maxLength={500}
-                  />
-                  <button onClick={handleSendMessage} disabled={!inputMessage.trim() || isLoading}>
-                    {isLoading ? "..." : "Enviar"}
-                  </button>
-                </div>
+                <div ref={messagesEndRef} />
               </div>
-            </section>
-          </main>
-        </header>
+            )}
+          </div>
+        </div>
 
-        <nav>
-          <button onClick={() => navigate("/ChangePassword")}>Cambiar Contraseña</button>
-          <button onClick={handleLogout}>Cerrar Sesión</button>
-        </nav>
-
-        <footer className="footer">
-          <p>&copy; 🥟 2025 SOMMER 🤖 IA ❤ . Todos los derechos reservados Oiste, ve!!...</p>
-        </footer>
-      </div>
+        {/* Área de entrada de mensajes */}
+        <div className="input-area">
+          <input
+            type="text"
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Escribe tu mensaje aquí..."
+            disabled={isLoading}
+            maxLength={500}
+          />
+          <button onClick={handleSendMessage} disabled={!inputMessage.trim() || isLoading}>
+            {isLoading ? "..." : "Enviar"}
+          </button>
+        </div>
+      </main>
     </div>
-  )
+
+    {/* Pie de página */}
+    <footer className="assistant-footer">
+  <p className="footer-text">&copy; 2025 SOMMER IA - Asistente Virtual.</p>
+</footer>
+  </div>
+);
+
 }
 
 export default UserHome

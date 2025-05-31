@@ -1,21 +1,43 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* 🌟 Variables globales */
+:root {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.8;
+  font-weight: 400;
+  color: #fff;
+  background: linear-gradient(135deg, #141e30, #243b55);
 }
 
+/* 🎭 Estilo general del cuerpo */
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* 📦 Contenedor raíz */
+#root {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 3rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+}
+
+/* 🌀 Animación del logo */
 .logo {
-  height: 6em;
+  height: 7em;
   padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+  transition: transform 0.4s, filter 0.3s;
 }
+
 .logo:hover {
-  filter: drop-shadow(0 0 2em #eeeef1aa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #eaededaa);
+  filter: drop-shadow(0 0 2em #ff512faa);
+  transform: scale(1.1);
 }
 
 @keyframes logo-spin {
@@ -28,15 +50,86 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .logo {
+    animation: logo-spin infinite 12s linear;
   }
 }
 
+/* ✨ Tarjetas */
 .card {
-  padding: 2em;
+  padding: 2.5em;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
 }
 
+/* 📖 Sección de documentación */
 .read-the-docs {
-  color: #888;
+  color: #bbb;
+  font-size: 1.1rem;
+}
+
+/* ✏️ Área de entrada bien estructurada */
+.input-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* 📏 Input con límites */
+.input-area input {
+  flex: 1;
+  max-width: 70%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  color: #fff;
+}
+
+/* 🚀 Botón de enviar dentro de su zona */
+.input-area button {
+  flex-shrink: 0;
+  padding: 8px 16px; /* Tamaño más pequeño */
+  font-size: 0.9rem;
+  border-radius: 6px;
+  background: linear-gradient(to right, #ff512f, #dd2476);
+  color: #fff;
+  transition: 0.3s ease-in-out;
+}
+
+.input-area button:hover {
+  background: linear-gradient(to right, #ff7730, #ff3377);
+}
+
+/* 🚪 Botón de cerrar sesión más compacto */
+.logout-button {
+  padding: 6px 10px; /* Tamaño más pequeño */
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  background: none;
+  margin-left: 5px; /* Menos separación */
+}
+
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 📢 Pie de página */
+.footer {
+  background: linear-gradient(to right, #141e30, #243b55);
+  color: #ffffff;
+  text-align: center;
+  padding: 15px;
+  font-size: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
