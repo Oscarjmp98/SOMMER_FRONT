@@ -86,11 +86,18 @@ function UserHome() {
   }, [navigate])
 
   const loadChatHistory = async (userId) => {
-    setHistoryLoaded(false)
-    const history = await fetchChatHistory(userId)
-    setMessages(history)
-    setHistoryLoaded(true)
+  setHistoryLoaded(false);
+  const history = await fetchChatHistory(userId);
+  setMessages(history.reverse()); // Invierte el orden de los mensajes
+  setHistoryLoaded(true);
   }
+
+  // const loadChatHistory = async (userId) => {
+  //   setHistoryLoaded(false)
+  //   const history = await fetchChatHistory(userId)
+  //   setMessages(history)
+  //   setHistoryLoaded(true)
+  // }
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return
