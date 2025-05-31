@@ -14,7 +14,8 @@ const formatTimestamp = (timestamp) => {
 
 const fetchChatHistory = async (userId) => {
   try {
-    const response = await axios.get(`http://localhost:5000/api/chat/history/${userId}`)
+    const response = await axios.get(`https://sommer-back-steel.vercel.app/api/chat/history/${userId}`)
+    //const response = await axios.get(`http://localhost:5000/api/chat/history/${userId}`)
     const chatHistory = []
     
     response.data.forEach((conv, index) => {
@@ -46,7 +47,8 @@ const fetchChatHistory = async (userId) => {
 
 const sendMessageToBackend = async (prompt, userId) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/chat", { prompt, userId })
+    const response = await axios.post("https://sommer-back-steel.vercel.app/api/chat", { prompt, userId })
+    //const response = await axios.post("http://localhost:5000/api/chat", { prompt, userId })
     return response.data.response
   } catch (error) {
     throw new Error("Error al procesar el mensaje")
@@ -152,7 +154,8 @@ function UserHome() {
     const userId = usuarioGuardado?.id || usuarioGuardado?.correo;
 
     if (userId) {
-      await axios.post("http://localhost:5000/api/chat/logout", {
+      await axios.post("https://sommer-back-steel.vercel.app/api/chat/logout", {
+      //await axios.post("http://localhost:5000/api/chat/logout", {
         userId,
       });
     }

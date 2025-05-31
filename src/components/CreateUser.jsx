@@ -19,7 +19,8 @@ function CreateUser() {
         setSuccessMessage('');
 
         try {
-            const response = await axios.post('http://localhost:5000/api/chat/Usuarios', {
+            const response = await axios.post('https://sommer-back-steel.vercel.app/api/chat/Usuarios', {
+            //const response = await axios.post('http://localhost:5000/api/chat/Usuarios', {
                 correo,
                 contrasena,
                 nombre,
@@ -73,7 +74,7 @@ function CreateUser() {
                             {showPassword ? "Ocultar" : "Mostrar"} Contraseña
                         </label>
                         </div>
-                    <button type="submit" id="btnCreateUser"  >Crear Usuario</button>
+                    <button type="submit" id="btnCreateUser"  >Registrarse</button>
                     <button type="button" id="btnCreateUser" onClick={() => navigate('/')}>
                         Regresar
                     </button>
