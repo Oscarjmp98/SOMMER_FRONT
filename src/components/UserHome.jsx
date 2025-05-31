@@ -146,6 +146,26 @@ function UserHome() {
     }
   }
 
+  const handleLogout = async () => {
+  try {
+    const usuarioGuardado = JSON.parse(localStorage.getItem("usuario"));
+    const userId = usuarioGuardado?.id || usuarioGuardado?.correo;
+
+    if (userId) {
+      await axios.post("http://localhost:5000/api/chat/logout", {
+        userId,
+      });
+    }
+
+    localStorage.removeItem("usuario");
+    navigate("/");
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error);
+    navigate("/");
+  }
+};
+
+
   return (
     <div className="allUserHome">
       <div className="user-home">
@@ -158,8 +178,7 @@ function UserHome() {
               <table>
                 <tbody>
                   <tr><td>Nombre:</td><td>{user.nombre}</td></tr>
-                  <tr><td>Correo:</td><td>{user.correo}</td></tr>
-                  <tr><td>ID de Usuario:</td><td>{user.id || user.correo}</td></tr>
+                  <tr><td>Correo:</td><td>{user.correo}</td></tr>                  
                 </tbody>
               </table>
             </section>
@@ -174,8 +193,7 @@ function UserHome() {
                   <div className="loading-history"><p>Cargando historial...</p></div>
                 ) : messages.length === 0 ? (
                   <div className="empty-chat">
-                    <p>¡Como te trata la vida, Ve? ¡Habla Puej!</p>
-                    <small>Usuario ID: {user.id || user.correo}</small>
+                    <p>¡Como te trata la vida, Ve? ¡Habla Puej!</p>                    
                   </div>
                 ) : (
                   <div className="messages">
@@ -213,7 +231,7 @@ function UserHome() {
 
         <nav>
           <button onClick={() => navigate("/ChangePassword")}>Cambiar Contraseña</button>
-          <button onClick={() => navigate("/")}>Cerrar Sesión</button>
+          <button onClick={handleLogout}>Cerrar Sesión</button>
         </nav>
 
         <footer className="footer">

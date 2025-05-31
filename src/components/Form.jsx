@@ -31,6 +31,7 @@ function LoginUser() {
             if (data.success) {
                 // Guardar datos del usuario en localStorage
                 localStorage.setItem('usuario', JSON.stringify({
+                    id: data.user._id, //se caputa el ID de la persona
                     nombre: data.user.nombre,
                     correo: data.user.correo
                 }));
